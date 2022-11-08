@@ -13,8 +13,12 @@ name = "out"
 path = "src/out.rs"
 
 [[bin]]
-name = "rand"
+name = "choppy"
 path = "src/choppy.rs"
+
+[[bin]]
+name = "smashy"
+path = "src/smashy.rs"
 
 [dependencies]
 rand = "0.8.5"

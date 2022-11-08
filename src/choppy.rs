@@ -18,7 +18,7 @@ fn main() {
     // Load and decode audio
     let audio_file = std::fs::File::open(path).unwrap();
 
-    // TODO: there must be a better way to do this without making `web-audio-api` a dependency. 
+    // TODO: there must be a better way to do this without making `web-audio-api` a dependency.
     let buffer = context
         .decode_audio_data_sync(audio_file)
         .unwrap()
@@ -27,7 +27,7 @@ fn main() {
 
     // Close the audio context as it is no longer needed.
     context.close_sync();
-    
+
     loop {
         // Now we chop out semi randomised chunks from the audio buffer and pipe
         // the raw samples straight to stdout.
@@ -43,5 +43,5 @@ fn main() {
                 None => break,
             }
         }
-        }
+    }
 }
