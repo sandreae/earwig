@@ -20,6 +20,10 @@ path = "src/choppy.rs"
 name = "smashy"
 path = "src/smashy.rs"
 
+[[bin]]
+name = "smoothy"
+path = "src/smoothy.rs"
+
 [dependencies]
 rand = "0.8.5"
 web-audio-api = "0.24.0"
