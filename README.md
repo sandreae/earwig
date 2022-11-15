@@ -28,7 +28,7 @@ Mainly because once I had the idea, I couldn't unthink it... Also I wanted to be
 ### Transformation
 
 * `smashy` Can't quite explain what this does, it sounds like extreme compression being applied in an unpredictable manner. Takes `stdin` sends via `sdout`.
-* `smoothy` Average each sample with the last `n` samples.
+* `smoothy [n]` Average each sample with the last `n` samples.
 
 ## Contribute
 
