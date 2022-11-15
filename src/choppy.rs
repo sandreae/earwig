@@ -1,32 +1,38 @@
 use std::env;
-
-use web_audio_api::context::{AudioContext, BaseAudioContext};
+use std::io;
 
 fn main() {
     // Parse args or set defaults
     let args: Vec<String> = env::args().collect();
-    let path = args.get(1).cloned().unwrap_or_else(|| "sample_01.wav".into());
-    let sample_size: usize = match args.get(2) {
+    // The number of samples in each chopped chunk of audio.
+    let chunk_size: usize = match args.get(1) {
         Some(ms) => ms.parse().unwrap_or(1000),
         None => 1000,
     };
+    // The max length of the audio buffer.
+    let buffer_length_secs: usize = match args.get(2) {
+        Some(ms) => ms.parse().unwrap_or(300),
+        None => 300,
+    };
+    let sample_rate = 44100;
 
-    // Get audio context
-    let context = AudioContext::default();
-    let sample_rate = context.sample_rate();
+    let stdin = io::stdin();
 
-    // Load and decode audio
-    let audio_file = std::fs::File::open(path).unwrap();
+    let mut buffer = Vec::new();
+    let lines = stdin.lines();
 
-    // TODO: there must be a better way to do this without making `web-audio-api` a dependency.
-    let buffer = context
-        .decode_audio_data_sync(audio_file)
-        .unwrap()
-        .get_channel_data(0)
-        .to_owned();
-
-    // Close the audio context as it is no longer needed.
-    context.close_sync();
+    // Capture samples piped in via stdin and fill the buffer
+    //
+    // The buffer is capped to 3 minutes of audio at a sample rate of 44100.
+    let mut sample = 0.0;
+    for line in lines {
+        sample = match line.expect("Can read line").parse() {
+            Ok(sample) => sample,
+            Err(_) => sample,
+        };
+        buffer.push(sample);
+        if buffer.len() > sample_rate * buffer_length_secs {break}
+    }
 
     loop {
         // Now we chop out semi randomised chunks from the audio buffer and pipe
@@ -36,7 +42,7 @@ fn main() {
         let offset = (buffer.len() as f32 * rand::random::<f32>()) as usize;
 
         // 2. From the offset position onwards, chop off samples one by one
-        for i in 0..(sample_rate as usize * sample_size / 1000) {
+        for i in 0..(sample_rate * chunk_size / 1000) {
             match buffer.get(i + offset) {
                 // 3. And print them to stdout, one line per sample
                 Some(sample) => println!("{sample}"),

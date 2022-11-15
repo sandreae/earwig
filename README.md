@@ -18,7 +18,8 @@ Mainly because once I had the idea, I couldn't unthink it... Also I wanted to be
 
 ## Modules
 
-* `choppy [sample_path] [sample_size_ms]` Chop up some audio semi-randomly. Takes an audio file as input and continually chops it up in a semi-random way, pipes samples to `stdout`. Optionally takes a second arg setting the starting sample size.
+* `in [path/to/file.wav]` Reads an audio file from disk and pipes every sample represented as an amplitude between -1 and 1 to `stdout`.
+* `choppy [chunk_size_ms] [max_buffer_len_secs]` Chop up some audio semi-randomly. Fills a fixed length buffer with samples recieved from `stdin` then continually chops it up in a semi-random way, pipes chopped audio samples to `stdout`. All args optional.
 * `smashy` Can't quite explain what this does, it sounds like extreme compression being applied in an unpredictable manner. Takes `stdin` sends via `sdout`.
 * `out` Audio output module. Slurps up samples from `stdin` and streams them as audible audio to the nearest output device.
 
