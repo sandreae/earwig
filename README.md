@@ -2,9 +2,7 @@
 
 A modular command line digital signal processor built in rust. Ever wanted to pipe raw audio samples around in the terminal to impress your friends at a party? Well then, you've come to the right place. `earwig` is a collection of CLI audio processors which harness the power of `stdin` and `stdout` to send samples down the signal chain. 
 
-For example: `./choppy sample.wav | ./out`
-
-This would cut random chunks from `sample.wav` and pipe the samples to `stdout` for `./out` to scoop up and output on the default audio device.
+For example: `./in sample.wav | ./choppy | ./out`
 
 ## Why
 
@@ -12,14 +10,15 @@ Mainly because once I had the idea, I couldn't unthink it... Also I wanted to be
 
 ## Try it
 
-1) `cargo build`
+1) `cargo build --release`
 
-2) `./target/debug/choppy | ./target/debug/out`
+2) `./target/release/in | ./target/release/choppy | ./target/release/out`
 
 ## Modules
 
 ### Input
 
+* `in [path/to/file.wav]` Reads an audio file from disk and pipes every sample represented as an amplitude between -1 and 1 to `stdout`.
 * `choppy [sample_path] [sample_size_ms]` Chop up some audio semi-randomly. Takes an audio file as input and continually chops it up in a semi-random way, pipes samples to `stdout`. Optionally takes a second arg setting the starting sample size.
 
 ### Output
