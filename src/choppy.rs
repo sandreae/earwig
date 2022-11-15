@@ -5,7 +5,7 @@ use web_audio_api::context::{AudioContext, BaseAudioContext};
 fn main() {
     // Parse args or set defaults
     let args: Vec<String> = env::args().collect();
-    let path = args.get(1).cloned().unwrap_or_else(|| "sample.wav".into());
+    let path = args.get(1).cloned().unwrap_or_else(|| "sample_01.wav".into());
     let sample_size: usize = match args.get(2) {
         Some(ms) => ms.parse().unwrap_or(1000),
         None => 1000,
