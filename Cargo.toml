@@ -25,6 +25,10 @@ name = "smashy"
 path = "src/smashy.rs"
 
 [[bin]]
+name = "smiley"
+path = "src/smiley.rs"
+
+[[bin]]
 name = "smoothy"
 path = "src/smoothy.rs"
 
