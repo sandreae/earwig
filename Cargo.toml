@@ -1,5 +1,5 @@
 [package]
-name = "rust-audio-tests"
+name = "earwig"
 version = "0.1.0"
 authors = ["sandreae <contact@samandreae.com>"]
 edition = "2021"
