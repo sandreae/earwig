@@ -74,7 +74,6 @@ where
 /// This method will be running in a seperate thread.
 fn buffer(tx: crossbeam::channel::Sender<f64>, stdin: Stdin) {
     let mut lines = stdin.lines();
-    let mut sample = 0.0;
 
     loop {
         let sample = next_sample(&mut lines);

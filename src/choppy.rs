@@ -31,7 +31,9 @@ fn main() {
             Err(_) => sample,
         };
         buffer.push(sample);
-        if buffer.len() > sample_rate * buffer_length_secs {break}
+        if buffer.len() > sample_rate * buffer_length_secs {
+            break;
+        }
     }
 
     loop {
