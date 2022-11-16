@@ -1,4 +1,4 @@
-use std::{io, env};
+use std::{env, io};
 
 use earwig::utils::next_sample;
 
