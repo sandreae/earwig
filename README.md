@@ -27,6 +27,7 @@ Mainly because once I had the idea, I couldn't unthink it... Also I wanted to be
 ### Transformation
 
 * `choppy [chunk_size_ms] [max_buffer_len_secs]` Chop up some audio semi-randomly. Fills a fixed length buffer with samples recieved from `stdin` then continually chops it up in a semi-random way, pipes chopped audio samples to `stdout`. All args optional.
+* `reversi [ms]` Reverses the order of samples within the passed time period.
 * `smashy` Can't quite explain what this does, it sounds like extreme compression being applied in an unpredictable manner. Takes `stdin` sends via `sdout`.
 * `smoothy [n]` Average each sample with the last `n` samples.
 
