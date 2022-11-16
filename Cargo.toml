@@ -21,6 +21,10 @@ name = "choppy"
 path = "src/choppy.rs"
 
 [[bin]]
+name = "clippy"
+path = "src/clippy.rs"
+
+[[bin]]
 name = "hungry"
 path = "src/hungry.rs"
 
