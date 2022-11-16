@@ -2,6 +2,8 @@ use std::collections::VecDeque;
 use std::env;
 use std::io;
 
+use earwig::utils::next_sample;
+
 fn main() {
     // Parse args or set defaults
     let args: Vec<String> = env::args().collect();
@@ -16,19 +18,10 @@ fn main() {
 
     let stdin = io::stdin();
     let mut lines = stdin.lines();
-    let mut sample = 0.0;
     let mut buffer = VecDeque::new();
 
     loop {
-        let line = lines.next();
-
-        sample = match line {
-            Some(line) => match line.expect("can read line").parse() {
-                Ok(sample) => sample,
-                Err(_) => sample,
-            },
-            None => sample,
-        };
+        let sample = next_sample(&mut lines);
 
         buffer.push_front(sample);
 

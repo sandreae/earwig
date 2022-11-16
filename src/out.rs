@@ -4,6 +4,7 @@ use std::time;
 
 use crossbeam::channel::unbounded;
 use cpal::traits::{DeviceTrait, HostTrait, StreamTrait};
+use earwig::utils::next_sample;
 
 fn main() {
     let host = cpal::default_host();
@@ -76,15 +77,7 @@ fn buffer(tx: crossbeam::channel::Sender<f64>, stdin: Stdin) {
     let mut sample = 0.0;
 
     loop {
-        let line = lines.next();
-
-        sample = match line {
-            Some(line) => match line.expect("can read line").parse() {
-                Ok(sample) => sample,
-                Err(_) => sample,
-            },
-            None => sample,
-        };
+        let sample = next_sample(&mut lines);
         tx.send(sample).expect("Could not send on channel");
     }
 }
