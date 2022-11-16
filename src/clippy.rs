@@ -52,7 +52,7 @@ fn main() {
         // Oops, we forgot how clipping is supposed to work.
         if !lawful && sample.abs() < threshold {
             if good {
-                // We can fix this sample!
+                // We can "fix" this sample!
                 sample = threshold * sample.signum();
             } else {
                 // This sample has no right to pass through *evil laugh*!
