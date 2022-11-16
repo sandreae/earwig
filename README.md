@@ -30,6 +30,7 @@ Mainly because once I had the idea, I couldn't unthink it... Also I wanted to be
 * `clippy [threshold] [alignment] [alignment]` It looks like you are trying to clip samples to an absolute value below the threshold amplitude. Unless clippy is chaotic, in which case it does the opposite. Oh, and if clippy is evil, it eats samples rather than fixing them.
 * `extremely [t]` Linearly interpolate each sample toward +/-1, `t` between zero and one determines how much to prioritize the extreme value.
 * `hungry [threshold]` Eats up any sample below the threshold amplitude.
+* `randomly [t]` Linearly interpolate each sample toward random values, `t` between zero and one determines how much to prioritize the random value.
 * `reversi [ms]` Reverses the order of samples within the passed time period.
 * `smashy` Can't quite explain what this does, it sounds like extreme compression being applied in an unpredictable manner. Takes `stdin` sends via `sdout`.
 * `smoothy [n]` Average each sample with the last `n` samples.

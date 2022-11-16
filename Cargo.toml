@@ -33,6 +33,10 @@ name = "hungry"
 path = "src/hungry.rs"
 
 [[bin]]
+name = "randomly"
+path = "src/randomly.rs"
+
+[[bin]]
 name = "reversi"
 path = "src/reversi.rs"
 
