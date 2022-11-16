@@ -21,6 +21,10 @@ name = "choppy"
 path = "src/choppy.rs"
 
 [[bin]]
+name = "hungry"
+path = "src/hungry.rs"
+
+[[bin]]
 name = "reversi"
 path = "src/reversi.rs"
 
