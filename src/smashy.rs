@@ -23,13 +23,16 @@ fn main() {
     // Infinite loop over samples passed via stdin
     loop {
         // Get the next sample
-        let mut sample = next_sample(&mut lines);
+        let mut sample = match next_sample(&mut lines) {
+            Some(sample) => sample,
+            None => continue
+        };
 
         // Update max_sample
         if sample > max_sample {
             max_sample = sample
         };
-        
+
         // smash the sample
         sample = smash(sample, max_sample);
 

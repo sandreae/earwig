@@ -1,6 +1,8 @@
 use std::env;
 use std::io;
 
+use earwig::utils::next_sample;
+
 fn main() {
     // Parse args or set defaults
     let args: Vec<String> = env::args().collect();
@@ -19,21 +21,17 @@ fn main() {
     let stdin = io::stdin();
 
     let mut buffer = Vec::new();
-    let lines = stdin.lines();
+    let mut lines = stdin.lines();
 
     // Capture samples piped in via stdin and fill the buffer
     //
     // The buffer is capped to 3 minutes of audio at a sample rate of 44100.
-    let mut sample = 0.0;
-    for line in lines {
-        sample = match line.expect("Can read line").parse() {
-            Ok(sample) => sample,
-            Err(_) => sample,
+    while buffer.len() < sample_rate * buffer_length_secs {
+        let sample = match next_sample(&mut lines) {
+            Some(sample) => sample,
+            None => break
         };
         buffer.push(sample);
-        if buffer.len() > sample_rate * buffer_length_secs {
-            break;
-        }
     }
 
     loop {

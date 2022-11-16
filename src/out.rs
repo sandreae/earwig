@@ -2,8 +2,8 @@ use std::io::{self, Stdin};
 use std::thread;
 use std::time;
 
-use crossbeam::channel::unbounded;
 use cpal::traits::{DeviceTrait, HostTrait, StreamTrait};
+use crossbeam::channel::unbounded;
 use earwig::utils::next_sample;
 
 fn main() {
@@ -76,7 +76,7 @@ fn buffer(tx: crossbeam::channel::Sender<f64>, stdin: Stdin) {
     let mut lines = stdin.lines();
 
     loop {
-        let sample = next_sample(&mut lines);
+        let sample = next_sample(&mut lines).unwrap_or_default();
         tx.send(sample).expect("Could not send on channel");
     }
 }

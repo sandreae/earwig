@@ -21,7 +21,10 @@ fn main() {
     let mut buffer = VecDeque::new();
 
     loop {
-        let sample = next_sample(&mut lines);
+        let sample = match next_sample(&mut lines) {
+            Some(sample) => sample,
+            None => continue
+        };
 
         buffer.push_front(sample);
 

@@ -34,7 +34,10 @@ fn main() {
 
     // Infinite loop over samples passed via stdin
     loop {
-        let mut sample = next_sample(&mut lines);
+        let mut sample = match next_sample(&mut lines) {
+            Some(sample) => sample,
+            None => continue
+        };
 
         feed_blender(&mut buf, sample, blending_time);
 
