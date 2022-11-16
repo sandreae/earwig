@@ -19,7 +19,6 @@ Mainly because once I had the idea, I couldn't unthink it... Also I wanted to be
 ### Input
 
 * `in [path/to/file.wav]` Reads an audio file from disk and pipes every sample represented as an amplitude between -1 and 1 to `stdout`.
-* `choppy [sample_path] [sample_size_ms]` Chop up some audio semi-randomly. Takes an audio file as input and continually chops it up in a semi-random way, pipes samples to `stdout`. Optionally takes a second arg setting the starting sample size.
 
 ### Output
 
@@ -27,6 +26,9 @@ Mainly because once I had the idea, I couldn't unthink it... Also I wanted to be
 
 ### Transformation
 
+* `choppy [chunk_size_ms] [max_buffer_len_secs]` Chop up some audio semi-randomly. Fills a fixed length buffer with samples recieved from `stdin` then continually chops it up in a semi-random way, pipes chopped audio samples to `stdout`. All args optional.
+* `hungry [threshold]` Eats up any sample below the threshold amplitude.
+* `reversi [ms]` Reverses the order of samples within the passed time period.
 * `smashy` Can't quite explain what this does, it sounds like extreme compression being applied in an unpredictable manner. Takes `stdin` sends via `sdout`.
 * `smoothy [n]` Average each sample with the last `n` samples.
 * `smiley [manic|cynic]` Constrains samples to stay positive. Results in very mild distortion.

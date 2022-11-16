@@ -1,5 +1,5 @@
 [package]
-name = "rust-audio-tests"
+name = "earwig"
 version = "0.1.0"
 authors = ["sandreae <contact@samandreae.com>"]
 edition = "2021"
@@ -19,6 +19,14 @@ path = "src/out.rs"
 [[bin]]
 name = "choppy"
 path = "src/choppy.rs"
+
+[[bin]]
+name = "hungry"
+path = "src/hungry.rs"
+
+[[bin]]
+name = "reversi"
+path = "src/reversi.rs"
 
 [[bin]]
 name = "smashy"
