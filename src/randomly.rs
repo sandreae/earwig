@@ -16,7 +16,7 @@ fn main() {
 
     // How strongly to interpolate samples toward chaos.
     let t: f64 = match args.get(1) {
-        Some(ms) => ms.parse().unwrap_or(0.2),
+        Some(ms) => ms.parse().unwrap_or(0.5),
         None => 0.5,
     };
 

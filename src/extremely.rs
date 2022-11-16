@@ -8,7 +8,7 @@ fn main() {
 
     // How strongly to interpolate samples toward +/- 1.
     let t: f64 = match args.get(1) {
-        Some(ms) => ms.parse().unwrap_or(0.2),
+        Some(ms) => ms.parse().unwrap_or(1.0),
         None => 1.0,
     };
 

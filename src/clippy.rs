@@ -8,8 +8,8 @@ fn main() {
 
     // Set the amplitude threshold for clippy to interact with samples.
     let threshold: f64 = match args.get(1) {
-        Some(ms) => ms.parse().unwrap_or(0.2),
-        None => 0.5,
+        Some(ms) => ms.parse().unwrap_or(0.3),
+        None => 0.3,
     };
 
     let mut lawful = true;
