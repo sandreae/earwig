@@ -52,6 +52,10 @@ path = "src/smiley.rs"
 name = "smoothy"
 path = "src/smoothy.rs"
 
+[[bin]]
+name = "speedy"
+path = "src/speedy.rs"
+
 [dependencies]
 rand = "0.8.5"
 web-audio-api = "0.24.0"

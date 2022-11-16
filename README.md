@@ -35,6 +35,7 @@ Mainly because once I had the idea, I couldn't unthink it... Also I wanted to be
 * `smashy` Can't quite explain what this does, it sounds like extreme compression being applied in an unpredictable manner. Takes `stdin` sends via `sdout`.
 * `smoothy [n]` Average each sample with the last `n` samples.
 * `smiley [manic|cynic]` Constrains samples to stay positive. Results in very mild distortion.
+* `speedy [x]` Changes the speed by factor `x`. For example, `speedy 0.5` halves the speed. 
 
 ## Contribute
 
