@@ -1,6 +1,6 @@
-use std::{env, io};
+use std::env;
 
-use earwig::utils::{next_sample, lerp};
+use earwig::utils::{sample_loop, lerp};
 
 fn main() {
     // Parse args or set defaults
@@ -12,21 +12,11 @@ fn main() {
         None => 1.0,
     };
 
-    let stdin = io::stdin();
-    let mut lines = stdin.lines();
-
-    // Infinite loop over samples passed via stdin
-    loop {
-        // Get the next sample
-        let mut sample = match next_sample(&mut lines) {
-            Some(sample) => sample,
-            None => continue,
-        };
-
+    sample_loop![mut sample in {
         // Turn that boring sample into something more extreme!
         sample = lerp(sample, sample.signum(), t);
 
         // print the sample to stdout
         println!("{sample}")
-    }
+    }];
 }

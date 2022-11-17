@@ -2,11 +2,10 @@
 // - Beyond an educated guess that samples might denote an amplitude between -1 to 1, I have no idea how any of this works.
 // - I have not listened to what this produces. The initial idea was to make things sluggish by limiting how much samples would differ from the previous ones. But perhaps all this does is to reduce volume in a slightly random way? Only one way to find out: submitting a PR and having you describe the effect to me.
 
-use std::collections::VecDeque;
 use std::env;
-use std::io;
+use std::collections::VecDeque;
 
-use earwig::utils::next_sample;
+use earwig::utils::sample_loop;
 
 // Smooth things out by averaging every sample over past samples.
 
@@ -28,27 +27,19 @@ fn main() {
         None => 1,
     };
 
-    let stdin = io::stdin();
-    let mut lines = stdin.lines();
     let mut buf = VecDeque::new();
 
-    // Infinite loop over samples passed via stdin
-    loop {
-        let mut sample = match next_sample(&mut lines) {
-            Some(sample) => sample,
-            None => continue
-        };
-
+    sample_loop![mut sample in {
         feed_blender(&mut buf, sample, blending_time);
-
+    
         let mut smoothed = 0.0;
         for i in 0..blending_time {
             smoothed += buf.get(i).map(Clone::clone).unwrap_or(sample);
         }
-
+    
         sample = smoothed / (blending_time as f64);
-
+    
         // print the smoothed sample to stdout
         println!("{sample}")
-    }
+    }];
 }
