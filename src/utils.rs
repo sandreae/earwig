@@ -15,3 +15,8 @@ pub fn next_sample(lines: &mut Lines<StdinLock>) -> Option<f64> {
         None => None,
     }
 }
+
+// https://en.wikipedia.org/wiki/Linear_interpolation#Programming_language_support
+pub fn lerp(v0: f64, v1: f64, t: f64) -> f64 {
+    return (1.0 - t) * v0 + t * v1;
+}

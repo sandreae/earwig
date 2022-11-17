@@ -21,8 +21,20 @@ name = "choppy"
 path = "src/choppy.rs"
 
 [[bin]]
+name = "clippy"
+path = "src/clippy.rs"
+
+[[bin]]
+name = "extremely"
+path = "src/extremely.rs"
+
+[[bin]]
 name = "hungry"
 path = "src/hungry.rs"
+
+[[bin]]
+name = "randomly"
+path = "src/randomly.rs"
 
 [[bin]]
 name = "reversi"
@@ -33,8 +45,16 @@ name = "smashy"
 path = "src/smashy.rs"
 
 [[bin]]
+name = "smiley"
+path = "src/smiley.rs"
+
+[[bin]]
 name = "smoothy"
 path = "src/smoothy.rs"
+
+[[bin]]
+name = "speedy"
+path = "src/speedy.rs"
 
 [dependencies]
 rand = "0.8.5"
