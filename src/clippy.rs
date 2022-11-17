@@ -60,7 +60,7 @@ fn main() {
             }
         }
 
-        // print the sample to stdout (if it wasn't evilly dispatched off)
+        // print the sample to stdout (if it wasn't evilly dispatched of)
         println!("{sample}")
     }
 }
