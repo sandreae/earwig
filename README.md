@@ -39,17 +39,24 @@ Mainly because once I had the idea, I couldn't unthink it... Also I wanted to be
 
 ---
 
-- `previous module`:
-- `extremely`:
-    ```
-    Linearly interpolate each sample toward +/-1
+#### `previous module`
 
-    Usage: extremely [T]
+bla
 
-    Arguments:
-    [T]  How strongly to interpolate samples toward +/- 1 [default: 1]
-    ```
-- `next module`:
+#### `extremely`
+
+```
+Linearly interpolate each sample toward +/-1
+
+Usage: extremely [T]
+
+Arguments:
+[T]  How strongly to interpolate samples toward +/- 1 [default: 1]
+```
+
+#### `next module`
+
+blubb
 
 
 ## Contribute
