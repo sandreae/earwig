@@ -1,6 +1,4 @@
-//! Utility methods used across multiple modules
-
-use std::io::{Lines, StdinLock};
+//! Utility methods used across multiple modules.
 
 /// Generates a loop that executes once for each sample arriving on stdin.
 ///
@@ -20,10 +18,14 @@ macro_rules! sample_loop {
 }
 pub use sample_loop;
 
-pub fn next_sample(lines: &mut Lines<StdinLock>) -> Option<f64> {
-    let line = lines.next();
+/// Retreive the next single sample which arrived via stdin. 
+/// 
+/// Returns an option which will be None when there is no sample available or if what is
+/// received from stdin could not be parsed into an f64.
+pub fn next_sample() -> Option<f64> {
+    let mut lines = std::io::stdin().lines();
 
-    match line {
+    match lines.next() {
         Some(line) => match line.expect("Can read line").parse() {
             Ok(sample) => Some(sample),
             Err(_) => None,
