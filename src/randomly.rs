@@ -1,6 +1,6 @@
-use std::{env, io};
+use std::env;
 
-use earwig::utils::{next_sample, lerp};
+use earwig::utils::{sample_loop, lerp};
 
 // https://en.wikipedia.org/wiki/Xorshift
 fn xorshift(mut state: u32) -> u32 {
@@ -20,19 +20,9 @@ fn main() {
         None => 0.5,
     };
 
-    let stdin = io::stdin();
-    let mut lines = stdin.lines();
-
     let mut random_state = 1234567;
 
-    // Infinite loop over samples passed via stdin
-    loop {
-        // Get the next sample
-        let mut sample = match next_sample(&mut lines) {
-            Some(sample) => sample,
-            None => continue,
-        };
-
+    sample_loop![mut sample in {
         // Make things more chaotic.
         random_state = xorshift(random_state);
         // Tame the chaos into a random amplitude.
@@ -45,6 +35,6 @@ fn main() {
         sample = lerp(sample, x, t);
 
         // print the sample to stdout
-        println!("{sample}")
-    }
+        println!("{sample}");
+    }];
 }

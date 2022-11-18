@@ -1,8 +1,7 @@
 use std::collections::VecDeque;
 use std::env;
-use std::io;
 
-use earwig::utils::next_sample;
+use earwig::utils::sample_loop;
 
 fn main() {
     // Parse args or set defaults
@@ -15,19 +14,11 @@ fn main() {
     };
 
     let sample_rate = 44100;
-
-    let stdin = io::stdin();
-    let mut lines = stdin.lines();
     let mut buffer = VecDeque::new();
 
-    loop {
-        let sample = match next_sample(&mut lines) {
-            Some(sample) => sample,
-            None => continue
-        };
-
+    sample_loop![sample in {
         buffer.push_front(sample);
-
+    
         // Once we have filled the buffer with the required number of samples
         // we pipe them out adain in reverse order.
         if buffer.len() > sample_rate * reverse_duration_ms as usize / 1000 {
@@ -36,5 +27,5 @@ fn main() {
             }
             buffer.clear()
         }
-    }
+    }];
 }

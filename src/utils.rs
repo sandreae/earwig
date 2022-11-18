@@ -2,6 +2,26 @@
 
 use std::io::{Lines, StdinLock};
 
+/// Generates a loop that executes once for each sample arriving on stdin.
+///
+/// Call as `sample_loop![sample in {this_code_can_use(sample);}]`
+/// or `sample_loop![mut sample in {sample = this_code_can_mutably_use(sample);}]`.
+#[macro_export]
+macro_rules! sample_loop {
+    ($sample:pat in $body:block) => {
+        for raw in std::io::stdin().lines() {
+            match raw.expect("Can read line").parse::<f64>() {
+                Ok($sample) => {
+                    $body
+                }
+                Err(_) => continue, // We forgivingly ignore input that does not parse as a float.
+                                    // Neither do we enforce that float to lie between -1 and 1 btw.
+            }
+        }
+    };
+}
+pub use sample_loop;
+
 pub fn next_sample(lines: &mut Lines<StdinLock>) -> Option<f64> {
     let line = lines.next();
 

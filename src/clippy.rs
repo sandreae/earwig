@@ -1,6 +1,6 @@
-use std::{env, io};
+use std::env;
 
-use earwig::utils::next_sample;
+use earwig::utils::sample_loop;
 
 fn main() {
     // Parse args or set defaults
@@ -27,17 +27,7 @@ fn main() {
         }
     }
 
-    let stdin = io::stdin();
-    let mut lines = stdin.lines();
-
-    // Infinite loop over samples passed via stdin
-    loop {
-        // Get the next sample
-        let mut sample = match next_sample(&mut lines) {
-            Some(sample) => sample,
-            None => continue,
-        };
-
+    sample_loop![mut sample in {
         // We need to clip the sample.
         if lawful && sample.abs() > threshold {
             if good {
@@ -61,6 +51,6 @@ fn main() {
         }
 
         // print the sample to stdout (if it wasn't evilly dispatched of)
-        println!("{sample}")
-    }
+        println!("{sample}");
+    }];
 }
