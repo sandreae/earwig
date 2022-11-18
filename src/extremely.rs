@@ -1,20 +1,21 @@
-use std::env;
+use clap::Parser;
 
 use earwig::utils::{sample_loop, lerp};
 
-fn main() {
-    // Parse args or set defaults
-    let args: Vec<String> = env::args().collect();
+/// Linearly interpolate each sample toward +/-1
+#[derive(Parser, Debug)]
+struct Args {
+   /// How strongly to interpolate samples toward +/- 1.
+   #[arg(default_value_t = 1.0)]
+   t: f64,
+}
 
-    // How strongly to interpolate samples toward +/- 1.
-    let t: f64 = match args.get(1) {
-        Some(t) => t.parse().unwrap_or(1.0),
-        None => 1.0,
-    };
+fn main() {
+    let args = Args::parse();
 
     sample_loop![mut sample in {
         // Turn that boring sample into something more extreme!
-        sample = lerp(sample, sample.signum(), t);
+        sample = lerp(sample, sample.signum(), args.t);
 
         // print the sample to stdout
         println!("{sample}")

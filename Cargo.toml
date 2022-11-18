@@ -62,3 +62,4 @@ web-audio-api = "0.24.0"
 anyhow = "1.0.66"
 cpal = "0.14.1"
 crossbeam = "0.8.2"
+clap = { version = "4.0.26", features = ["derive"] }
