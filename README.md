@@ -35,7 +35,29 @@ Mainly because once I had the idea, I couldn't unthink it... Also I wanted to be
 * `smashy` Can't quite explain what this does, it sounds like extreme compression being applied in an unpredictable manner. Takes `stdin` sends via `sdout`.
 * `smoothy [n]` Average each sample with the last `n` samples.
 * `smiley [manic|cynic]` Constrains samples to stay positive. Results in very mild distortion.
-* `speedy [x]` Changes the speed by factor `x`. For example, `speedy 0.5` halves the speed. 
+* `speedy [x]` Changes the speed by factor `x`. For example, `speedy 0.5` halves the speed.
+
+<!-- ---
+
+#### `previous module`
+
+bla
+
+#### `extremely`
+
+```
+Linearly interpolate each sample toward +/-1
+
+Usage: extremely [T]
+
+Arguments:
+[T]  How strongly to interpolate samples toward +/- 1 [default: 1]
+```
+
+#### `next module`
+
+blubb -->
+
 
 ## Contribute
 
