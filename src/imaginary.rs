@@ -20,7 +20,7 @@ struct Args {
 }
 
 fn amplitude_to_pixel(amplitude: f64, args: &Args) -> i32 {
-    (amplitude * (args.height as f64)) as i32
+    (amplitude * ((args.height / 2) as f64)) as i32
 }
 
 fn main() {
@@ -57,7 +57,7 @@ fn main() {
         for j in horizon..((horizon as i32) + amplitude_to_pixel(accumulated_max, &args)) as u32 {
             imgbuf.put_pixel(i as u32, j, Luma([0]));
         }
-        for j in horizon + ((horizon as i32) + amplitude_to_pixel(accumulated_min, &args)) as u32..horizon {
+        for j in ((horizon as i32) + amplitude_to_pixel(accumulated_min, &args)) as u32..horizon {
             imgbuf.put_pixel(i as u32, j, Luma([255]));
         }
     }
