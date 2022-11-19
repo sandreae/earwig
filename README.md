@@ -37,7 +37,7 @@ Mainly because once I had the idea, I couldn't unthink it... Also I wanted to be
 * `smiley [manic|cynic]` Constrains samples to stay positive. Results in very mild distortion.
 * `speedy [x]` Changes the speed by factor `x`. For example, `speedy 0.5` halves the speed.
 
----
+<!-- ---
 
 #### `previous module`
 
@@ -56,7 +56,7 @@ Arguments:
 
 #### `next module`
 
-blubb
+blubb -->
 
 
 ## Contribute
