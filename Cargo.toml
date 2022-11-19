@@ -8,13 +8,13 @@ autobins = false
 readme = "README.md"
 exclude = [".gitignore"]
 
-[[bin]]
-name = "in"
-path = "src/in.rs"
-
-[[bin]]
-name = "out"
-path = "src/out.rs"
+# [[bin]]
+# name = "in"
+# path = "src/in.rs"
+#
+# [[bin]]
+# name = "out"
+# path = "src/out.rs"
 
 [[bin]]
 name = "choppy"
@@ -31,6 +31,10 @@ path = "src/extremely.rs"
 [[bin]]
 name = "hungry"
 path = "src/hungry.rs"
+
+[[bin]]
+name = "imaginary"
+path = "src/imaginary.rs"
 
 [[bin]]
 name = "randomly"
@@ -58,8 +62,9 @@ path = "src/speedy.rs"
 
 [dependencies]
 rand = "0.8.5"
-web-audio-api = "0.24.0"
+# web-audio-api = "0.24.0"
 anyhow = "1.0.66"
-cpal = "0.14.1"
+# cpal = "0.14.1"
 crossbeam = "0.8.2"
 clap = { version = "4.0.26", features = ["derive"] }
+image = "0.24.5"
