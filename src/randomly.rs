@@ -25,11 +25,9 @@ fn main() {
     sample_loop![mut sample in {
         // Make things more chaotic.
         random_state = xorshift(random_state);
-        // Tame the chaos into a random amplitude.
+        // Forge the chaos into a random amplitude of the same sign as the current sample.
         let mut x = (random_state as f64) / (u32::MAX as f64);
-        if random_state % 2 == 0 {
-            x = -x;
-        }
+        x *= sample.signum();
 
         // Turn that boring sample into something more chaotic!
         sample = lerp(sample, x, t);
