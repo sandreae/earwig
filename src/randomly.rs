@@ -1,13 +1,13 @@
 use std::env;
 
-use earwig::utils::{sample_loop, lerp};
+use earwig::utils::{lerp, sample_loop};
 
 // https://en.wikipedia.org/wiki/Xorshift
 fn xorshift(mut state: u32) -> u32 {
     state ^= state << 13;
     state ^= state >> 17;
     state ^= state << 5;
-    return state;
+    state
 }
 
 fn main() {

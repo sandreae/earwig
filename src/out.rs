@@ -1,10 +1,6 @@
-use std::io::{self, Stdin};
-use std::thread;
-use std::time;
-
 use cpal::traits::{DeviceTrait, HostTrait, StreamTrait};
 use crossbeam::channel::unbounded;
-use earwig::utils::next_sample;
+use earwig::sample_loop;
 
 fn main() {
     let host = cpal::default_host();
@@ -21,64 +17,44 @@ fn main() {
     }
 }
 
-/// Launch a buffer which captures samples piped via stdin then sends them to the audio stream
-/// which should output to the default audio device.
 fn run<T>(device: &cpal::Device, config: &cpal::StreamConfig) -> Result<(), anyhow::Error>
 where
     T: cpal::Sample,
 {
-    // Some setup
-    let stdin = io::stdin();
-    let channels = config.channels as usize;
-
-    // Channel for sending samples from the buffer to the output stream.
+    // Channel for sending samples to the output stream.
     let (buffer_tx, buffer_rx) = unbounded();
 
     // Closure for retreiving a single sample from the buffer
     let mut next_value = move || -> (f64, f64) {
+        // We only deal with mono modules for now so here we split the signal
+        // for stereo output.
         let sample = buffer_rx
             .recv()
-            .expect("receive sample from buffer channel");
+            .expect("Receive sample from buffer channel");
         (sample, sample)
     };
 
-    // Launch the buffer on it's own thread, passind in the channel sender
-    let _ = thread::Builder::new()
-        .spawn(move || buffer(buffer_tx, stdin))
-        .expect("spawns buffer thread");
-
-    // Method which handles errors occuring on the stream
-    let err_fn = |err| eprintln!("an error occurred on stream: {}", err);
-
     // Build the stream, passing in our buffer getter
+    let channels = config.channels as usize;
     let stream = device.build_output_stream(
         config,
         move |data: &mut [T], _: &cpal::OutputCallbackInfo| {
             write_data(data, channels, &mut next_value)
         },
-        err_fn,
+        |err| eprintln!("An error occurred on stream: {}", err),
     )?;
 
     // Start the stream!!!
     stream.play()?;
 
-    // Loop forever
-    loop {
-        thread::sleep(time::Duration::from_millis(1000));
-    }
-}
+    // Iterate over samples recieved in stdin and send them to the output stream.
+    //
+    // Terminates when stdin closes.
+    sample_loop![sample in {
+        buffer_tx.send(sample).expect("Could not send on buffer channel");
+    }];
 
-/// Buffer which pulls in samples from stdin, parses them, and then sends them
-/// on to the output stream via a channel.
-///
-/// This method will be running in a seperate thread.
-fn buffer(tx: crossbeam::channel::Sender<f64>, stdin: Stdin) {
-    let mut lines = stdin.lines();
-
-    loop {
-        let sample = next_sample(&mut lines).unwrap_or_default();
-        tx.send(sample).expect("Could not send on channel");
-    }
+    Ok(())
 }
 
 // Helper for writing samples to the stream
