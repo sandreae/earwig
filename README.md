@@ -61,7 +61,7 @@ blubb -->
 
 ## Contribute
 
-Yes please!! I don't know if two modules cam be considered a chain, so please contribute more. When doing so, bare in mind:
+Yes please!! When doing so, bare in mind:
 
 * one module per file in `src/`
 * add a `[[bin]]` entry to `Cargo.toml` for your new module
