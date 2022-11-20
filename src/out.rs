@@ -1,8 +1,6 @@
-use std::thread;
-use std::time;
-
 use cpal::traits::{DeviceTrait, HostTrait, StreamTrait};
-use earwig::utils::next_sample;
+use crossbeam::channel::unbounded;
+use earwig::sample_loop;
 
 fn main() {
     let host = cpal::default_host();
@@ -23,42 +21,49 @@ fn run<T>(device: &cpal::Device, config: &cpal::StreamConfig) -> Result<(), anyh
 where
     T: cpal::Sample,
 {
-    // The number of output channels
-    let channels = config.channels as usize;
+    // Channel for sending samples to the output stream.
+    let (buffer_tx, buffer_rx) = unbounded();
 
-    // Closure for retreiving a single sample from sdtin
-    let mut next_output_sample = move || -> (f64, f64) {
-        // If there is no sample we create some silence.
-        let sample = next_sample().unwrap_or_default();
-        // So far we only deal with mono signals so here we prepare that for stereo output. 
+    // Closure for retreiving a single sample from the buffer
+    let mut next_value = move || -> (f64, f64) {
+        // We only deal with mono modules for now so here we split the signal
+        // for stereo output.
+        let sample = buffer_rx
+            .recv()
+            .expect("Receive sample from buffer channel");
         (sample, sample)
     };
 
-    // Build the stream, passing in our next sample getter
+    // Build the stream, passing in our buffer getter
+    let channels = config.channels as usize;
     let stream = device.build_output_stream(
         config,
         move |data: &mut [T], _: &cpal::OutputCallbackInfo| {
-            write_data(data, channels, &mut next_output_sample)
+            write_data(data, channels, &mut next_value)
         },
-        |err| eprintln!("an error occurred on stream: {}", err),
+        |err| eprintln!("An error occurred on stream: {}", err),
     )?;
 
     // Start the stream!!!
     stream.play()?;
 
-    // Loop forever
-    loop {
-        thread::sleep(time::Duration::from_millis(1000));
-    }
+    // Iterate over samples recieved in stdin and send them to the output stream.
+    //
+    // Terminates when stdin closes.
+    sample_loop![sample in {
+        buffer_tx.send(sample).expect("Could not send on buffer channel");
+    }];
+
+    Ok(())
 }
 
 // Helper for writing samples to the stream
-fn write_data<T>(output: &mut [T], channels: usize, next_output_sample: &mut dyn FnMut() -> (f64, f64))
+fn write_data<T>(output: &mut [T], channels: usize, next_sample: &mut dyn FnMut() -> (f64, f64))
 where
     T: cpal::Sample,
 {
     for frame in output.chunks_mut(channels) {
-        let sample = next_output_sample();
+        let sample = next_sample();
         let left: T = cpal::Sample::from::<f32>(&(sample.0 as f32));
         let right: T = cpal::Sample::from::<f32>(&(sample.1 as f32));
 
