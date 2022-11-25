@@ -36,6 +36,7 @@ Mainly because once I had the idea, I couldn't unthink it... Also I wanted to be
 * `smoothy [n]` Average each sample with the last `n` samples.
 * `smiley [manic|cynic]` Constrains samples to stay positive. Results in very mild distortion.
 * `speedy [x]` Changes the speed by factor `x`. For example, `speedy 0.5` halves the speed.
+* `wobbly [x]` Modulates speed against a control signal, which makes everything sound.... wobbly.... `wobbly 0.5` generates an LFO at frequency 0.5 and modulates the passed samples accordingly.
 
 <!-- ---
 
