@@ -1,6 +1,8 @@
+use std::fmt::Debug;
+use std::io::Write;
+
 use cpal::traits::{DeviceTrait, HostTrait, StreamTrait};
 use cpal::{Sample, StreamConfig};
-use std::fmt::Debug;
 
 fn main() -> Result<(), anyhow::Error> {
     let host = cpal::default_host();
@@ -38,7 +40,9 @@ fn write_input_data<T>(input: &[T])
 where
     T: Sample + Debug,
 {
+    let stdout = std::io::stdout();
+    let mut lock = stdout.lock();
     for &sample in input.iter() {
-        println!("{:?}", sample)
+        writeln!(lock, "{:?}", sample).expect("Can write to stdout");
     }
 }
