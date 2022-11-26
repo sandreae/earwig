@@ -13,6 +13,10 @@ name = "in"
 path = "src/in.rs"
 
 [[bin]]
+name = "silly"
+path = "src/silly.rs"
+
+[[bin]]
 name = "out"
 path = "src/out.rs"
 
