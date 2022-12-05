@@ -24,6 +24,7 @@ Mainly because once I had the idea, I couldn't unthink it... Also I wanted to be
 ### Output
 
 * `out` Audio output module. Slurps up samples from `stdin` and streams them as audible audio to the nearest output device.
+* `imaginary [--width] [--height] [path]` PNG output module. Slurps up samples from `stdin` and creates a png in which several amplitudes are represented by their maximum to fit the given width in pixel.
 
 ### Transformation
 

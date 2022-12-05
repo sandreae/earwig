@@ -37,6 +37,10 @@ name = "hungry"
 path = "src/hungry.rs"
 
 [[bin]]
+name = "imaginary"
+path = "src/imaginary.rs"
+
+[[bin]]
 name = "randomly"
 path = "src/randomly.rs"
 
@@ -71,3 +75,4 @@ anyhow = "1.0.66"
 cpal = "0.14.1"
 crossbeam = "0.8.2"
 clap = { version = "4.0.26", features = ["derive"] }
+image = "0.24.5"
