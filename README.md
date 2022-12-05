@@ -19,7 +19,7 @@ Mainly because once I had the idea, I couldn't unthink it... Also I wanted to be
 ### Input
 
 * `in [path/to/file.wav]` Reads an audio file from disk and pipes every sample represented as an amplitude between -1 and 1 to `stdout`.
-* `silly.exe [OPTIONS] [F] [WAVE]` Oscillator... Silly... Get it?
+* `silly [OPTIONS] [F] [WAVE]` Oscillator... Silly... Get it?
 
 ### Output
 
