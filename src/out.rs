@@ -1,20 +1,16 @@
-use cpal::traits::{DeviceTrait, HostTrait, StreamTrait};
+use cpal::traits::{DeviceTrait, StreamTrait};
 use crossbeam::channel::unbounded;
+
 use earwig::sample_loop;
+use earwig::utils::audio_device;
 
 fn main() {
-    let host = cpal::default_host();
-
-    let device = host
-        .default_output_device()
-        .expect("failed to find a default output device");
-
-    let config = device.default_output_config().unwrap();
+    let (device, config) = audio_device();
 
     println!();
-    println!("CHANNELS: {}",config.channels());
-    println!("SAMPLE RATE: {}",config.sample_rate().0);
-    println!("SAMPLE FORMAT: {:?}",config.sample_format());
+    println!("CHANNELS: {}", config.channels());
+    println!("SAMPLE RATE: {}", config.sample_rate().0);
+    println!("SAMPLE FORMAT: {:?}", config.sample_format());
 
     match config.sample_format() {
         cpal::SampleFormat::F32 => run::<f32>(&device, &config.into()).unwrap(),

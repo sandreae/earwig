@@ -1,20 +1,15 @@
 use std::fmt::Debug;
 use std::io::Write;
 
-use cpal::traits::{DeviceTrait, HostTrait, StreamTrait};
-use cpal::{Sample, StreamConfig};
+use cpal::traits::{DeviceTrait, StreamTrait};
+use cpal::Sample;
+
+use earwig::utils::audio_device;
 
 fn main() -> Result<(), anyhow::Error> {
-    let host = cpal::default_host();
-
-    let device = host
-        .default_input_device()
-        .expect("failed to find input device");
-
-    let mut config: StreamConfig = device
-        .default_input_config()
-        .expect("Failed to get default input config")
-        .into();
+    // Get the audio device and config
+    let (device, config) = audio_device();
+    let mut config: cpal::StreamConfig = config.into();
 
     // We just want one channel
     config.channels = 1;
@@ -23,6 +18,8 @@ fn main() -> Result<(), anyhow::Error> {
         eprintln!("an error occurred on stream: {}", err);
     };
 
+    // Create an input stream which listens on the default input device and writes incomming samples
+    // to stdout.
     let stream = device.build_input_stream(
         &config,
         move |data, _: &_| write_input_data::<f32>(data),

@@ -16,6 +16,7 @@ macro_rules! sample_loop {
         }
     };
 }
+use cpal::{Device, traits::{HostTrait, DeviceTrait}, StreamConfig, SupportedStreamConfig};
 pub use sample_loop;
 
 /// Retreive the next single sample which arrived via stdin. 
@@ -37,4 +38,19 @@ pub fn next_sample() -> Option<f64> {
 // https://en.wikipedia.org/wiki/Linear_interpolation#Programming_language_support
 pub fn lerp(v0: f64, v1: f64, t: f64) -> f64 {
     (1.0 - t) * v0 + t * v1
+}
+
+// Get default audio device and config
+pub fn audio_device() -> (Device, SupportedStreamConfig) {
+    let host = cpal::default_host();
+
+    let device = host
+        .default_output_device()
+        .expect("failed to find a default output device");
+
+    let config = device
+        .default_input_config()
+        .expect("Failed to get default input config");
+    
+    (device, config)
 }
