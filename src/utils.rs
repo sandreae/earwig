@@ -1,5 +1,8 @@
 //! Utility methods used across multiple modules.
 
+use cpal::traits::{DeviceTrait, HostTrait};
+use cpal::{Device, SupportedStreamConfig};
+
 /// Generates a loop that executes once for each sample arriving on stdin.
 ///
 /// Call as `sample_loop![sample in {this_code_can_use(sample);}]`
@@ -16,11 +19,11 @@ macro_rules! sample_loop {
         }
     };
 }
-use cpal::{Device, traits::{HostTrait, DeviceTrait}, StreamConfig, SupportedStreamConfig};
+
 pub use sample_loop;
 
-/// Retreive the next single sample which arrived via stdin. 
-/// 
+/// Retreive the next single sample which arrived via stdin.
+///
 /// Returns an option which will be None when there is no sample available or if what is
 /// received from stdin could not be parsed into an f64.
 pub fn next_sample() -> Option<f64> {
@@ -51,6 +54,6 @@ pub fn audio_device() -> (Device, SupportedStreamConfig) {
     let config = device
         .default_input_config()
         .expect("Failed to get default input config");
-    
+
     (device, config)
 }
