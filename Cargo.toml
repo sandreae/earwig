@@ -9,6 +9,10 @@ readme = "README.md"
 exclude = [".gitignore"]
 
 [[bin]]
+name = "ear"
+path = "src/ear.rs"
+
+[[bin]]
 name = "in"
 path = "src/in.rs"
 

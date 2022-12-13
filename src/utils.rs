@@ -1,5 +1,8 @@
 //! Utility methods used across multiple modules.
 
+use cpal::traits::{DeviceTrait, HostTrait};
+use cpal::{Device, SupportedStreamConfig};
+
 /// Generates a loop that executes once for each sample arriving on stdin.
 ///
 /// Call as `sample_loop![sample in {this_code_can_use(sample);}]`
@@ -16,10 +19,11 @@ macro_rules! sample_loop {
         }
     };
 }
+
 pub use sample_loop;
 
-/// Retreive the next single sample which arrived via stdin. 
-/// 
+/// Retreive the next single sample which arrived via stdin.
+///
 /// Returns an option which will be None when there is no sample available or if what is
 /// received from stdin could not be parsed into an f64.
 pub fn next_sample() -> Option<f64> {
@@ -37,4 +41,19 @@ pub fn next_sample() -> Option<f64> {
 // https://en.wikipedia.org/wiki/Linear_interpolation#Programming_language_support
 pub fn lerp(v0: f64, v1: f64, t: f64) -> f64 {
     (1.0 - t) * v0 + t * v1
+}
+
+// Get default audio device and config
+pub fn audio_device() -> (Device, SupportedStreamConfig) {
+    let host = cpal::default_host();
+
+    let device = host
+        .default_output_device()
+        .expect("failed to find a default output device");
+
+    let config = device
+        .default_input_config()
+        .expect("Failed to get default input config");
+
+    (device, config)
 }
