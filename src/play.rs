@@ -34,7 +34,15 @@ fn main() {
     // Close the audio context as it is no longer needed.
     context.close_sync();
 
+    let mut finished = false;
     loop {
+        // If the sample has finished (and is not being looped) we keep wait in order to keep the
+        // process running here.
+        if finished {
+            thread::sleep(Duration::from_secs(1));
+            continue;
+        }
+
         // Pipe the samples into stdout
         for sample in &buffer {
             println!("{sample}")
@@ -42,7 +50,7 @@ fn main() {
 
         // If should loop is false break out of the loop
         if !should_loop {
-            break;
+            finished = true;
         }
     }
 }
