@@ -12,8 +12,8 @@ fn main() {
     };
     // The max length of the audio buffer.
     let buffer_length_secs: usize = match args.get(2) {
-        Some(ms) => ms.parse().unwrap_or(300),
-        None => 300,
+        Some(ms) => ms.parse().unwrap_or(180),
+        None => 180,
     };
     let sample_rate = 44100;
     let mut buffer = Vec::new();
