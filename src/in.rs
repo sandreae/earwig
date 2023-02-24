@@ -1,11 +1,14 @@
-use std::env;
+use std::{env, thread, time::Duration};
 
 use web_audio_api::context::{AudioContext, BaseAudioContext};
 
 fn main() {
     // Parse args or set defaults
     let args: Vec<String> = env::args().collect();
-    let path = args.get(1).cloned().unwrap_or_else(|| "sample_01.wav".into());
+    let path = args
+        .get(1)
+        .cloned()
+        .unwrap_or_else(|| "sample_01.wav".into());
 
     // Get audio context
     let context = AudioContext::default();
@@ -23,8 +26,10 @@ fn main() {
     // Close the audio context as it is no longer needed.
     context.close_sync();
 
-    // Pipe the samples into stdout
-    for sample in buffer {
-        println!("{sample}")
+    loop {
+        // Pipe the samples into stdout
+        for sample in &buffer {
+            println!("{sample}")
+        }
     }
 }
