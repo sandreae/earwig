@@ -10,6 +10,14 @@ fn main() {
         .cloned()
         .unwrap_or_else(|| "sample_01.wav".into());
 
+    // should_loop is set to false by default
+    let mut should_loop = false;
+    if let Some(arg) = args.get(2) {
+        if arg == "loop" {
+            should_loop = true;
+        }
+    }
+
     // Get audio context
     let context = AudioContext::default();
 
@@ -30,6 +38,11 @@ fn main() {
         // Pipe the samples into stdout
         for sample in &buffer {
             println!("{sample}")
+        }
+
+        // If should loop is false break out of the loop
+        if !should_loop {
+            break;
         }
     }
 }
